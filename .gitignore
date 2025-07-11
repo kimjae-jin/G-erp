@@ -1,0 +1,10 @@
+# Dependencies
+/backend/node_modules
+/backend/dist
+
+# Environment
+/backend/.env
+
+# IDE & OS
+.vscode/
+.DS_Store
