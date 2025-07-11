@@ -5,7 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Tenant } from './tenants/entities/tenant.entity';
 import { User } from './users/entities/user.entity';
-import { AuthModule } from './auth/auth.module'; // AuthModule 임포트
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { AuthModule } from './auth/auth.module'; // AuthModule 임포트
       synchronize: true,
       logging: true,
     }),
-    AuthModule, // AuthModule 등록
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

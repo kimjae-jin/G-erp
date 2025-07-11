@@ -1,10 +1,14 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthService } from './service/auth.service';
+import { AuthController } from './controller/auth.controller';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports: [
+    forwardRef(() => UsersModule),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -12,12 +16,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: {
-          expiresIn: '1d', // 토큰 유효기간: 1일
+          expiresIn: '1d',
         },
       }),
     }),
   ],
-  providers: [],
-  exports: [PassportModule, JwtModule],
+  providers: [AuthService],
+  controllers: [AuthController],
+  exports: [AuthService],
 })
 export class AuthModule {}
