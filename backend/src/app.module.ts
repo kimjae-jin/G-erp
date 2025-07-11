@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Tenant } from './tenants/entities/tenant.entity';
 import { User } from './users/entities/user.entity';
+import { AuthModule } from './auth/auth.module'; // AuthModule 임포트
 
 @Module({
   imports: [
@@ -19,10 +20,11 @@ import { User } from './users/entities/user.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Tenant, User], // User 엔티티 추가
+      entities: [Tenant, User],
       synchronize: true,
       logging: true,
     }),
+    AuthModule, // AuthModule 등록
   ],
   controllers: [AppController],
   providers: [AppService],
